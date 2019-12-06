@@ -1,6 +1,9 @@
+from os.path import abspath, dirname, join
 from math import floor
 
-with open('input.txt', 'r') as f:
+
+inputFilePath = join(dirname(abspath(__file__)), 'input.txt')
+with open(inputFilePath, 'r') as f:
     data = f.read().split()
 
 totalFuel = 0
