@@ -2,8 +2,25 @@ from os.path import abspath, dirname, join
 inputFilePath = join(dirname(abspath(__file__)), 'input.txt')
 
 
-def manhattan(x1, x2, y1, y2):
-    return abs(x1 - x2) + abs(y1 - y2)
+def parseEdge(edge):
+    direction = edge[0]
+    dimension = 'x'
+    distance = 0
+
+    if direction == 'U':
+        dimension = 'y'
+        distance = int(edge[1:])
+    elif direction == 'D':
+        dimension = 'y'
+        distance = -int(edge[1:])
+    elif direction == 'R':
+        dimension = 'x'
+        distance = int(edge[1:])
+    elif direction == 'L':
+        dimension = 'x'
+        distance = -int(edge[1:])
+    
+    return [dimension, distance]
 
 
 with open(inputFilePath, 'r') as f:
@@ -53,26 +70,11 @@ w = portX + maxX
 h = portY + maxY
 mapA = [set() for y in range(h + 1)]
 
-
+pathAPoints = []
 x = portX
 y = portY
 for edge in pathA:
-    direction = edge[0]
-    dimension = 'x'
-    distance = 0
-
-    if direction == 'U':
-        dimension = 'y'
-        distance = int(edge[1:])
-    elif direction == 'D':
-        dimension = 'y'
-        distance = -int(edge[1:])
-    elif direction == 'R':
-        dimension = 'x'
-        distance = int(edge[1:])
-    elif direction == 'L':
-        dimension = 'x'
-        distance = -int(edge[1:])
+    dimension, distance = parseEdge(edge)
 
     if dimension == 'x':
         if distance >= 0:
@@ -82,6 +84,7 @@ for edge in pathA:
         
         for i in r:
             mapA[y].add(i)
+            pathAPoints.append((i,y))
             
         x += distance
     else:
@@ -92,6 +95,7 @@ for edge in pathA:
         
         for i in r:
             mapA[i].add(x)
+            pathAPoints.append((x,i))
             
         y += distance
 
@@ -99,26 +103,12 @@ for edge in pathA:
 #follow the second wire and find intersections
 print('Finding intersections...')
 intersections = []
+pathBPoints = []
 x = portX
 y = portY
 
 for edge in pathB:
-    direction = edge[0]
-    dimension = 'x'
-    distance = 0
-
-    if direction == 'U':
-        dimension = 'y'
-        distance = int(edge[1:])
-    elif direction == 'D':
-        dimension = 'y'
-        distance = -int(edge[1:])
-    elif direction == 'R':
-        dimension = 'x'
-        distance = int(edge[1:])
-    elif direction == 'L':
-        dimension = 'x'
-        distance = -int(edge[1:])
+    dimension, distance = parseEdge(edge)
 
     if dimension == 'x':
         if distance >= 0:
@@ -128,7 +118,8 @@ for edge in pathB:
         
         for i in r:
             try:
-                if not mapA[y].isdisjoint([i]):
+                pathBPoints.append((i,y))
+                if i in mapA[y]:
                     intersections.append((i, y))
             except:
                 pass
@@ -141,8 +132,9 @@ for edge in pathB:
             r = range(y - 1, y + distance - 1, -1)
         
         for i in r:
+            pathBPoints.append((x,i))
             try:
-                if not mapA[i].isdisjoint([x]):
+                if x in mapA[i]:
                     intersections.append((x, i))
             except:
                 pass
@@ -150,14 +142,9 @@ for edge in pathB:
         y += distance 
 
 
-#find intersection with minimum Manhattan distance to the central port (0,0)
+#find fewest combined steps the wires must take to reach an intersection
 print('Find closest intersection of wires...')
-distances = [manhattan(portX, intersection[0], portY, intersection[1]) for intersection in intersections]
-minDistance = min(distances)
-
-for i in range(len(intersections)):
-    print('{} units to intersection at {}'.format(distances[i], intersections[i]))
-
-print('--------------------------------------')
-print('Minimal distance is {}'.format(minDistance))
-print('--------------------------------------')
+combinedSteps=[pathAPoints.index(inters) + pathBPoints.index(inters) + 2 for inters in intersections]
+print('Intersections: {}'.format(intersections))
+print('Combined steps: {}'.format(combinedSteps))
+print('Min steps: {}'.format(min(combinedSteps)))
