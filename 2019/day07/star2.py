@@ -26,21 +26,17 @@ for comb in combinations:
     ampD.connect(ampE)
     ampE.connect(ampA)
 
-    #start program
+    #pass 0 as input to first amp. this starts the code execution and 
+    #subsequently activates all connected amps as well and only stops
+    #once all amps have halted (either in finished state or waiting for input)
     ampA.receive(0)
-    ampA.run()
-    ampB.run()
-    ampC.run()
-    ampD.run()
-    ampE.run()
 
+    #read result from 
     results.append((comb, ampE.output))
 
-# print(results)
-
+#filter results for the 
 max = results[0]
 for r in results:
     if r[1] > max[1]:
         max = r
-
 print(max)
