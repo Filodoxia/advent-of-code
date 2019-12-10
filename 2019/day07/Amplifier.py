@@ -32,7 +32,7 @@ class Amplifier:
 
     def receive(self, input):
         self.input.append(input)
-        if self.state == AmpState.WAITING:
+        if self.state in [AmpState.WAITING, AmpState.INITIALIZED]:
             self.run()
 
 
