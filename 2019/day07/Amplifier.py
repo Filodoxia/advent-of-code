@@ -120,5 +120,5 @@ class Amplifier:
             param1 = self.getParam(self.ip + 1, paramModes[0])
             param2 = self.getParam(self.ip + 2, paramModes[1])
             comp = 1 if param1 == param2 else 0
-            self.memory[self.memory[self.ip + 3]] = 0
+            self.memory[self.memory[self.ip + 3]] = comp
             self.ip += 4

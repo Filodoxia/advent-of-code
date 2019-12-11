@@ -1,5 +1,5 @@
 from itertools import permutations
-from Amplifier import Amplifier, AmpState
+from Amplifier import Amplifier
 from os.path import abspath, dirname, join
 
 
