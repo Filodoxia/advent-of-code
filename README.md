@@ -3,9 +3,9 @@
 My solution attempts for the advent of code coding puzzles.
 
 | Year | Language | Link                          |
-|------|----------|-------------------------------|
-| 2019 |  Python  | https://adventofcode.com/2019 |
-
+| ---- | -------- | ----------------------------- |
+| 2019 | Python   | https://adventofcode.com/2019 |
+| 2021 | Python   | https://adventofcode.com/2021 |
 
 # Other solutions
 
