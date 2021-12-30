@@ -1,4 +1,5 @@
 from os import path
+from typing import List
 
 
 def read(day: int):
@@ -12,13 +13,15 @@ def readIntArray(day: int):
     return a
 
 
-def readIntArray2d(day: int, separator: str = ","):
+def readIntArray2d(day: int, separator: str = None) -> List[List[int]]:
     filePath = path.join(path.dirname(__file__), "input", f"day{day}")
     a = []
     with open(filePath, "r") as input:
         for line in input:
             if separator:
-                a.append(list(map(int, line.split(","))))
+                lineList = line.strip().split(",")
             else:
-                a.append(list(map(int, list(line.strip()))))
+                lineList = list(line.strip())
+
+            a.append(list(map(int, lineList)))
     return a
