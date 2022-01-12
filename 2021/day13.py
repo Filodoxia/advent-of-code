@@ -1,4 +1,4 @@
-from typing import List, Set, Tuple
+from typing import Set, Tuple
 import input as inp
 import re
 
