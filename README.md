@@ -6,6 +6,7 @@ My solution attempts for the advent of code coding puzzles.
 | ---- | -------- | ----------------------------- |
 | 2019 | Python   | https://adventofcode.com/2019 |
 | 2021 | Python   | https://adventofcode.com/2021 |
+| 2022 | Python   | https://adventofcode.com/2022 |
 
 # Other solutions
 
