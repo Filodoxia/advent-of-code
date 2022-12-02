@@ -2,7 +2,7 @@ from os import path
 
 
 def _getFilePath(filename: str):
-    file_path = path.join(path.abspath(path.curdir), "/input/", filename)
+    file_path = path.join(path.abspath(path.curdir), "input", filename)
     if not path.isfile(file_path):
         raise Exception("Input file not found")
     return file_path
