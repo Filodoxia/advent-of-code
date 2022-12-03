@@ -21,6 +21,6 @@ def readLines(filename: str):
     file_content: list[str] = []
 
     with open(_getFilePath(filename), "r") as f:
-        file_content = f.readlines()
+        file_content = list(map(lambda x: x.strip(), f.readlines()))
 
     return file_content
