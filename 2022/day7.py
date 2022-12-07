@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-from typing import Union
 import input
 import math
 
@@ -11,9 +10,10 @@ class File():
 
 
 class Directory():
-    def __init__(self, name: str, parent: Union["Directory", None]) -> None:
+    # def __init__(self, name: str, parent: Union["Directory", None]) -> None:
+    def __init__(self, name: str, parent: "Directory") -> None:
         self.name: str = name
-        self.parent: Directory = parent if parent else self
+        self.parent: Directory = parent
         self.dirs: dict[str, Directory] = {}
         self.files: dict[str, File] = {}
 
@@ -21,6 +21,11 @@ class Directory():
         sizeOfOwnFiles = sum(map(lambda f: f.size, self.files.values()))
         sizeOfSubdirs = sum(map(lambda d: d.size(), self.dirs.values()))
         return sizeOfOwnFiles + sizeOfSubdirs
+
+
+class RootDirectory(Directory):
+    def __init__(self) -> None:
+        super().__init__("/", self)
 
 
 def star1():
@@ -40,7 +45,7 @@ def star2():
 
 
 def buildFs() -> Directory:
-    root = Directory(name="/", parent=None)
+    root = RootDirectory()
     root.parent = root
     wd = root
 
