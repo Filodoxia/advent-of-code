@@ -24,3 +24,13 @@ def readLines(filename: str):
         file_content = list(map(lambda x: x.strip(), f.readlines()))
 
     return file_content
+
+
+def readGrid(filename: str):
+    file_content: list[list[int]] = []
+
+    with open(_getFilePath(filename), "r") as f:
+        file_content = list(
+            map(lambda x: [int(y) for y in x.strip()], f.readlines()))
+
+    return file_content
