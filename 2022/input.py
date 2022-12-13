@@ -26,11 +26,27 @@ def readLines(filename: str):
     return file_content
 
 
-def readGrid(filename: str):
-    file_content: list[list[int]] = []
+def readGrid(filename: str, inLineSep: str | None = None, asInt: bool = False):
+    file_content: list[list[str]] | list[list[int]] = []
 
     with open(_getFilePath(filename), "r") as f:
-        file_content = list(
-            map(lambda x: [int(y) for y in x.strip()], f.readlines()))
+        if inLineSep:
+            if asInt:
+#autopep8: off
+                file_content = list(map(
+                    lambda x: [int(y) for y in x.strip().split(inLineSep)]
+                    , f.readlines()
+                ))
+            else:
+                file_content = [x.strip().split(inLineSep) for x in f.readlines()]
+        else:
+            if asInt:
+                file_content = list(map(
+                    lambda x: [int(y) for y in x.strip()]
+                    , f.readlines()
+                ))
+            else:
+                file_content = [[y for y in x.strip()] for x in f.readlines()]
+#autopep8: on
 
     return file_content
