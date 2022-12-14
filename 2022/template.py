@@ -8,7 +8,7 @@ DEBUG2 = True
 
 
 def getInput(part: int):
-    filename = f"""day{DAY}{"_test" if (TEST1 if DAY==1 else TEST2) else ""}.txt"""
+    filename = f"""day{DAY}{"_test" if (TEST1 if part==1 else TEST2) else ""}.txt"""
     return input.read(filename)
 
 
