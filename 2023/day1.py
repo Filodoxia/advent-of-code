@@ -1,8 +1,7 @@
 from pathlib import Path
 import re
 
-DAY = 1
-IN_FILE = Path(__file__).joinpath(f"../in/day{DAY}").resolve()
+IN_FILE = Path(__file__).joinpath("../in/day1").resolve()
 
 
 def star1():
