@@ -1,4 +1,5 @@
 from pathlib import Path
+from functools import reduce
 
 IN_FILE = Path(__file__).joinpath("../in/day3").resolve()
 
@@ -18,11 +19,11 @@ def star1():
     # .LAAAR.
     # .LnnnR.
     # .LBBBR.
-    for r in range(max_row+1):
+    for r in range(max_row + 1):
         cur_num = ''
         is_part = False
 
-        for c in range(max_col+1):
+        for c in range(max_col + 1):
             if input[r][c].isdigit():
                 # for the first digit of a number we check the left side for symbols
                 if (cur_num == '') and (c > 0):
@@ -75,7 +76,99 @@ def star1():
 
 
 def star2():
-    pass
+    input = IN_FILE.open().readlines()
+
+    max_row = len(input) - 1
+    max_col = len(input[0].strip()) - 1
+
+    gear_rations = []
+
+    for r in range(max_row + 1):
+        for c in range(max_col + 1):
+            if input[r][c] == "*":
+                # search around the * for numbers
+                numbers = []
+
+                is_row_0 = (r == 0)
+                is_row_max = (r == max_row)
+                is_col_0 = (c == 0)
+                is_col_max = (c == max_col)
+
+                def find_left(r, c):
+                    c_temp = c
+
+                    while (c_temp >= 0) and input[r][c_temp].isdigit():
+                        c_temp -= 1
+
+                    return (c_temp + 1)
+
+                def search_right(r, c):
+                    c_temp = c
+                    n = ''
+
+                    while (c_temp <= max_col) and input[r][c_temp].isdigit():
+                        n += input[r][c_temp]
+                        c_temp += 1
+
+                    return int(n)
+
+                def get_number(r, c):
+                    if not input[r][c].isdigit():
+                        return
+                    return search_right(r, find_left(r, c))
+
+                # above
+                if not is_row_0:
+                    n = get_number(r-1, c)
+                    if n:
+                        numbers.append(n)
+
+                # above left (diagonally)
+                if not (is_row_0 or is_col_0 or input[r-1][c].isdigit()):
+                    n = get_number(r-1, c-1)
+                    if n:
+                        numbers.append(n)
+
+                # above right (diagonally)
+                if not (is_row_0 or is_col_max or input[r-1][c].isdigit()):
+                    n = get_number(r-1, c+1)
+                    if n:
+                        numbers.append(n)
+
+                # right
+                if not is_col_max:
+                    n = get_number(r, c+1)
+                    if n:
+                        numbers.append(n)
+
+                # below
+                if not is_row_max:
+                    n = get_number(r+1, c)
+                    if n:
+                        numbers.append(n)
+
+                # below left (diagonally)
+                if not (is_row_max or is_col_0 or input[r+1][c].isdigit()):
+                    n = get_number(r+1, c-1)
+                    if n:
+                        numbers.append(n)
+
+                # below right (diagonally)
+                if not (is_row_max or is_col_max or input[r+1][c].isdigit()):
+                    n = get_number(r+1, c+1)
+                    if n:
+                        numbers.append(n)
+
+                # left
+                if not is_col_0:
+                    n = get_number(r, c-1)
+                    if n:
+                        numbers.append(n)
+
+                if len(numbers) == 2:
+                    gear_rations.append(reduce(lambda x, y: x*y, numbers))
+
+    print(sum(gear_rations))
 
 
 if __name__ == "__main__":
