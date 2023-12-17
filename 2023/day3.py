@@ -1,12 +1,9 @@
 from pathlib import Path
-import re
 
 IN_FILE = Path(__file__).joinpath("../in/day3").resolve()
 
-rx = re.compile(r"")
 
-
-def is_part(char: str):
+def is_symbol(char: str):
     return (not ((char == '.') or char.isdigit()))
 
 
@@ -15,8 +12,6 @@ def star1():
 
     max_row = len(input) - 1
     max_col = len(input[0].strip()) - 1
-
-    print(max_row, max_col)
 
     parts = []
 
@@ -32,40 +27,26 @@ def star1():
                 # for the first digit of a number we check the left side for symbols
                 if (cur_num == '') and (c > 0):
                     # check left
-                    is_part = not (
-                        (input[r][c-1] == '.') or (input[r][c-1].isdigit())
-                    )
+                    is_part = is_symbol(input[r][c-1])
 
                     # check left above (diagonally)
                     if r > 0:
-                        # if r == max_row:
-                        #     print(input[r][c])
-                        #     print(input[r-1][c-1])
-
-                        is_part = is_part or (not (
-                            (input[r-1][c-1] == '.') or (input[r-1][c-1].isdigit())
-                        ))
+                        is_part = is_part or is_symbol(input[r-1][c-1])
 
                     # check left below (diagonally)
                     if r < max_row:
-                        is_part = is_part or (not (
-                            (input[r+1][c-1] == '.') or (input[r+1][c-1].isdigit())
-                        ))
+                        is_part = is_part or is_symbol(input[r+1][c-1])
 
                 # add digit to current nubmer
                 cur_num += input[r][c]
 
                 # check above
                 if r > 0:
-                    is_part = is_part or (not (
-                        (input[r-1][c] == '.') or (input[r-1][c].isdigit())
-                    ))
+                    is_part = is_part or is_symbol(input[r-1][c])
 
                 # check below
                 if r < max_row:
-                    is_part = is_part or (not (
-                        (input[r+1][c] == '.') or (input[r+1][c].isdigit())
-                    ))
+                    is_part = is_part or is_symbol(input[r+1][c])
             else:
                 # if there is a cur_num, we now have reached the end of the number => check right side for symbols
                 if cur_num:
@@ -74,15 +55,11 @@ def star1():
 
                     # check right above (diagonally)
                     if r > 0:
-                        is_part = is_part or (not (
-                            (input[r-1][c] == '.') or (input[r-1][c].isdigit())
-                        ))
+                        is_part = is_part or is_symbol(input[r-1][c])
 
                     # check right below (diagonally)
                     if r < max_row:
-                        is_part = is_part or (not (
-                            (input[r+1][c] == '.') or (input[r+1][c].isdigit())
-                        ))
+                        is_part = is_part or is_symbol(input[r+1][c])
 
                     if is_part:
                         parts.append(int(cur_num))
@@ -93,7 +70,7 @@ def star1():
         if is_part:
             parts.append(int(cur_num))
 
-    print(parts)
+    # print(parts)
     print(sum(parts))
 
 
