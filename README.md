@@ -2,11 +2,13 @@
 
 My solution attempts for the advent of code coding puzzles.
 
-| Year | Language | Link                          | Days |
-| ---- | -------- | ----------------------------- | ---- |
-| 2019 | Python   | https://adventofcode.com/2019 | 1-9  |
-| 2021 | Python   | https://adventofcode.com/2021 | 1-15 |
-| 2022 | Python   | https://adventofcode.com/2022 | 1-   |
+| Year | Language    | Link                          | Days |
+| ---- | ----------- | ----------------------------- | ---- |
+| 2019 | Python      | https://adventofcode.com/2019 | 1-9  |
+| 2021 | Python      | https://adventofcode.com/2021 | 1-15 |
+| 2022 | Python      | https://adventofcode.com/2022 |      |
+| 2023 | Python-3.10 | https://adventofcode.com/2023 |      |
+| 2024 | Python-3.10 | https://adventofcode.com/2024 |      |
 
 # Other solutions
 
